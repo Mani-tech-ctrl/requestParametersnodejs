@@ -1,35 +1,29 @@
 const express = require("express");
-const app =   express();
+const app = express();
+const path = require("path"); //to view directory
+const port = 8000;
 
-let port = 8000;
 
-app.listen(port, ()=>{
-    console.log(`app is listening on port ${port}`);
+
+//view  template
+app.set("view engine", "ejs"); //view folder name by deafult seached by express
+app.set("views", path.join(__dirname, "/views"));
+
+
+app.get("/", (req, res) =>{
+    res.render("home.ejs");    //render = send files
+                                 
+})
+
+
+app.get("/hello", (req, res) => {
+    res.send("hello");
 });
 
 
 
-app.get("/", (req, res) => {
-    console.log(req.params);
-    res.send("Hello, i am root path");
-});
+app.listen(port, () => {
+    console.log(`listening on port ${port}`);
+}); 
 
-app.get('/:username/:id', (req, res) =>{
-    let {username, id } = req.params;
-    res.send(`welcome@${username}${id} Update your task`);
-
-});
-
-
-
-
-
-
-//listen all request
-// app.use((req, res)=>{
-//     console.log("request received");
-//     let code = "<h1>Student's Name <h1> <ul>Asutosh</ul> <ul>Abhishek</ul> <ul>Poonam</ul> <ul>Kavita</ul> <ul>Rahul</ul>";
-//     res.send(code);
-// });
-
-
+//res.semd = string array html boolean obj not in case large file
